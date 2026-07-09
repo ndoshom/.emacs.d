@@ -1,0 +1,1 @@
+(("/home/ns/test/" ("main.c" 1 1783629083) ("testing" 1 1783628387)) ("/home/ns/playground/" ("steel/hello.scm" 1 1783628478) ("hello-c/main.c" 1 1783628407) ("flake.nix" 1 1783627915)))
