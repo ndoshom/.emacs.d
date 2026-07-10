@@ -228,3 +228,37 @@ and refresh the keybindings note."
          ("C-c n l" . denote-link)             ; Insert a link to another note
          ("C-c n b" . denote-backlinks)))      ; Show backlinks to current note
 
+;; -----------------------------------------------------------------
+;; mu4e (mail client, indexes local Maildir synced by mbsync)
+;; -----------------------------------------------------------------
+(use-package mu4e
+  :ensure nil
+  :load-path "/usr/share/emacs/site-lisp/mu4e/" ; verify this path with: find /usr -iname mu4e.el
+  :commands (mu4e mu4e-compose-new)
+  :bind ("C-c m" . mu4e)
+  :config
+  (setq mu4e-maildir "~/Mail")               ; adjust to whichever path you actually used
+  (setq mu4e-get-mail-command "mbsync -a")
+  (setq mu4e-update-interval 300)
+  (setq mu4e-change-filenames-when-moving t)
+  (setq mu4e-maildir-shortcuts
+        '((:maildir "/gmail/INBOX"        :key ?i)
+          (:maildir "/gmail/[Gmail]/Sent Mail" :key ?s)
+          (:maildir "/gmail/[Gmail]/Drafts"    :key ?d)
+          (:maildir "/gmail/[Gmail]/Trash"     :key ?t)))
+
+  ;; --- Sending mail via msmtp ---
+  (setq sendmail-program "/usr/bin/msmtp")
+  (setq message-sendmail-f-is-evil t)
+  (setq message-sendmail-extra-arguments '("--read-envelope-from"))
+  (setq send-mail-function #'message-send-mail-with-sendmail)
+  (setq message-send-mail-function #'message-send-mail-with-sendmail)
+
+  ;; --- Identity ---
+  (setq user-mail-address "ndosho1@gmail.com")
+  (setq user-full-name "Ndosho Mbwana") ; put your real name here
+
+  ;; --- Sensible composing defaults ---
+  (setq mu4e-compose-format-flowed t)
+  (setq mu4e-sent-messages-behavior 'sent)   ; don't double-save Gmail's own Sent copy
+  (setq message-kill-buffer-on-exit t))      ; close compose buffer after sending
